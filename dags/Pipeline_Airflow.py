@@ -113,8 +113,12 @@ t3 = PythonOperator(
 )
 
 # TODO: load to BigQuery
-
+t4 = BashOperator(
+    task_id='bq_import',
+    bash_command='bq load --source_format=CSV --autodetect Test_DE_1.ws5_online_retail gs://asia-northeast1-airflow-tes-308162ac-bucket/data/result.csv',
+    dag=dag,
+)
 
 # TODO: Dependencies
 
-[t1, t2] >> t3
+[t1, t2] >> t3 >> t4
